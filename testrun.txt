@@ -1,0 +1,342 @@
+base) ian@ian-Latitude-E7440:~$ nano taylors1.f
+(base) ian@ian-Latitude-E7440:~$ gfortran taylors1.f -o taylors1
+(base) ian@ian-Latitude-E7440:~$ ./taylors1
+ Enter the value of x:
+7
+ Enter the number of terms in the series:
+22
+ The value of e^   7.0000000000000000       using           22  terms is:    1096.6316732277091     
+(base) ian@ian-Latitude-E7440:~$ cat taylors1.f
+      PROGRAM TAYLOR_EXPANSION
+      IMPLICIT NONE
+      REAL*8 :: x, term, sum
+      INTEGER*4 :: i, n
+
+      PRINT *, 'Enter the value of x:'
+      READ *, x
+      PRINT *, 'Enter the number of terms in the series:'
+      READ *, n
+
+      sum = 1.0d0
+      term = 1.0d0
+
+      DO i = 1, n
+         term = term * x / i
+         sum = sum + term
+      END DO
+
+      PRINT *, 'The value of e^', x, ' using ', n, ' terms is: ', sum
+
+      END
+(base) ian@ian-Latitude-E7440:~$ sloccount taylors1.f
+Have a non-directory at the top, so creating directory top_dir
+Adding /home/ian/taylors1.f to top_dir
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+16      top_dir         fortran=16
+
+
+Totals grouped by language (dominant language first):
+fortran:         16 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 16
+Development Effort Estimate, Person-Years (Person-Months) = 0.00 (0.03)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.06 (0.67)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.05
+Total Estimated Cost to Develop                           = $ 352
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
+(base) ian@ian-Latitude-E7440:~$ time ./taylors1
+ Enter the value of x:
+5
+ Enter the number of terms in the series:
+22
+ The value of e^   5.0000000000000000       using           22  terms is:    148.41315852164772     
+
+real	0m6.521s
+user	0m0.003s
+sys	0m0.000s
+(base) ian@ian-Latitude-E7440:~$ gfortran taylors1.f -S
+(base) ian@ian-Latitude-E7440:~$ gfortran taylors1.s -o taylors1s
+(base) ian@ian-Latitude-E7440:~$ ./taylors1s
+ Enter the value of x:
+5
+ Enter the number of terms in the series:
+22
+ The value of e^   5.0000000000000000       using           22  terms is:    148.41315852164772     
+(base) ian@ian-Latitude-E7440:~$ cat taylors1.s
+	.file	"taylors1.f"
+	.text
+	.section	.rodata
+.LC0:
+	.string	"taylors1.f"
+.LC1:
+	.ascii	"Enter the value of x:"
+	.align 8
+.LC2:
+	.ascii	"Enter the number of terms in the series:"
+.LC4:
+	.ascii	"The value of e^"
+.LC5:
+	.ascii	" using "
+.LC6:
+	.ascii	" terms is: "
+	.text
+	.type	MAIN__, @function
+MAIN__:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$576, %rsp
+	leaq	.LC0(%rip), %rax
+	movq	%rax, -568(%rbp)
+	movl	$6, -560(%rbp)
+	movl	$128, -576(%rbp)
+	movl	$6, -572(%rbp)
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write@PLT
+	leaq	-576(%rbp), %rax
+	movl	$21, %edx
+	leaq	.LC1(%rip), %rcx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_character_write@PLT
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write_done@PLT
+	leaq	.LC0(%rip), %rax
+	movq	%rax, -568(%rbp)
+	movl	$7, -560(%rbp)
+	movl	$128, -576(%rbp)
+	movl	$5, -572(%rbp)
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_read@PLT
+	leaq	-40(%rbp), %rcx
+	leaq	-576(%rbp), %rax
+	movl	$8, %edx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_real@PLT
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_read_done@PLT
+	leaq	.LC0(%rip), %rax
+	movq	%rax, -568(%rbp)
+	movl	$8, -560(%rbp)
+	movl	$128, -576(%rbp)
+	movl	$6, -572(%rbp)
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write@PLT
+	leaq	-576(%rbp), %rax
+	movl	$40, %edx
+	leaq	.LC2(%rip), %rcx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_character_write@PLT
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write_done@PLT
+	leaq	.LC0(%rip), %rax
+	movq	%rax, -568(%rbp)
+	movl	$9, -560(%rbp)
+	movl	$128, -576(%rbp)
+	movl	$5, -572(%rbp)
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_read@PLT
+	leaq	-20(%rbp), %rcx
+	leaq	-576(%rbp), %rax
+	movl	$4, %edx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_integer@PLT
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_read_done@PLT
+	movsd	.LC3(%rip), %xmm0
+	movsd	%xmm0, -32(%rbp)
+	movsd	.LC3(%rip), %xmm0
+	movsd	%xmm0, -16(%rbp)
+	movl	-20(%rbp), %eax
+	movl	$1, -4(%rbp)
+.L3:
+	cmpl	%eax, -4(%rbp)
+	setg	%dl
+	movzbl	%dl, %edx
+	testl	%edx, %edx
+	jne	.L4
+	movsd	-40(%rbp), %xmm0
+	mulsd	-16(%rbp), %xmm0
+	pxor	%xmm1, %xmm1
+	cvtsi2sdl	-4(%rbp), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, -16(%rbp)
+	movsd	-32(%rbp), %xmm0
+	addsd	-16(%rbp), %xmm0
+	movsd	%xmm0, -32(%rbp)
+	addl	$1, -4(%rbp)
+	jmp	.L3
+.L4:
+	nop
+	leaq	.LC0(%rip), %rax
+	movq	%rax, -568(%rbp)
+	movl	$19, -560(%rbp)
+	movl	$128, -576(%rbp)
+	movl	$6, -572(%rbp)
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write@PLT
+	leaq	-576(%rbp), %rax
+	movl	$15, %edx
+	leaq	.LC4(%rip), %rcx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_character_write@PLT
+	leaq	-40(%rbp), %rcx
+	leaq	-576(%rbp), %rax
+	movl	$8, %edx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_real_write@PLT
+	leaq	-576(%rbp), %rax
+	movl	$7, %edx
+	leaq	.LC5(%rip), %rcx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_character_write@PLT
+	leaq	-20(%rbp), %rcx
+	leaq	-576(%rbp), %rax
+	movl	$4, %edx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_integer_write@PLT
+	leaq	-576(%rbp), %rax
+	movl	$11, %edx
+	leaq	.LC6(%rip), %rcx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_character_write@PLT
+	leaq	-32(%rbp), %rcx
+	leaq	-576(%rbp), %rax
+	movl	$8, %edx
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
+	call	_gfortran_transfer_real_write@PLT
+	leaq	-576(%rbp), %rax
+	movq	%rax, %rdi
+	call	_gfortran_st_write_done@PLT
+	nop
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	MAIN__, .-MAIN__
+	.globl	main
+	.type	main, @function
+main:
+.LFB1:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movl	%edi, -4(%rbp)
+	movq	%rsi, -16(%rbp)
+	movq	-16(%rbp), %rdx
+	movl	-4(%rbp), %eax
+	movq	%rdx, %rsi
+	movl	%eax, %edi
+	call	_gfortran_set_args@PLT
+	leaq	options.5.0(%rip), %rax
+	movq	%rax, %rsi
+	movl	$7, %edi
+	call	_gfortran_set_options@PLT
+	call	MAIN__
+	movl	$0, %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	main, .-main
+	.section	.rodata
+	.align 16
+	.type	options.5.0, @object
+	.size	options.5.0, 28
+options.5.0:
+	.long	2116
+	.long	4095
+	.long	0
+	.long	1
+	.long	1
+	.long	0
+	.long	31
+	.align 8
+.LC3:
+	.long	0
+	.long	1072693248
+	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
+	.section	.note.GNU-stack,"",@progbits
+(base) ian@ian-Latitude-E7440:~$ sloccount taylors1.s
+Have a non-directory at the top, so creating directory top_dir
+Adding /home/ian/taylors1.s to top_dir
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+222     top_dir         asm=222
+
+
+Totals grouped by language (dominant language first):
+asm:            222 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 222
+Development Effort Estimate, Person-Years (Person-Months) = 0.04 (0.49)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.16 (1.91)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.26
+Total Estimated Cost to Develop                           = $ 5,563
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
+(base) ian@ian-Latitude-E7440:~$ ^C
+(base) ian@ian-Latitude-E7440:~$ ^C
+(base) ian@ian-Latitude-E7440:~$ ^C
+(base) ian@ian-Latitude-E7440:~$ 
+
